@@ -2,7 +2,7 @@
 
 #### 1. Denpendency
 ```bash
-git clone --depth 1 https://github.com/yedf/handy && cd handy && make && make install
+git clone --depth 1 https://gitee.com/null_272_2533/handy && cd handy && make && make install
 ```
 
 ### 2. Build and run
