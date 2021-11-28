@@ -6,8 +6,21 @@ git clone --depth 1 https://github.com/yedf/handy && cd handy && make && make in
 ```
 
 ### 2. Build and run
+#### (1) Mac
 ```bash
 g++ -std=c++11 -lhandy server.cpp -o server && ./server
+```
+
+#### (2) Ubuntu
+```bash
+g++ -std=c++11 server.cpp -o server -lhandy -lpthread && ./server
+```
+
+#### (3) Dockerfile
+```bash
+docker build . -t handy-ml && docker run --rm -d -p 8081:8081 handy-ml
+```
+```bash
 # 2021/11/28-12:37:36.305413 119559dc0 INFO handy/poller.cc:130 poller kqueue 3 created
 # 2021/11/28-12:37:36.305606 119559dc0 INFO handy/conn.cc:285 fd 6 listening at 0.0.0.0:8081
 ```
