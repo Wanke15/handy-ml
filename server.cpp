@@ -1,6 +1,8 @@
 #include<handy/handy.h>
+#include "include/nlohmann/json.hpp"
 
 using namespace handy;
+using json = nlohmann::json;
 
 int main(int argc, const char *argv[]) {
     int threads = 1;
@@ -23,13 +25,23 @@ int main(int argc, const char *argv[]) {
 
 
     sample.onRequest("POST", "/hello-post", [](const HttpConnPtr &con) {
-            std::string body = con.getRequest().body;
-            std::string data = "hello ";
-            std::string result = "{\"data\": \"" + data + "\"}";
-            HttpResponse resp;
-            resp.headers = {std::make_pair("Content-Type", "application/json")};
-            resp.body = Slice(result);
-            con.sendResponse(resp);
+        // parse request data
+        std::string body = con.getRequest().body;
+        json req_data = json::parse(body);
+
+        // business logic
+        std::string name = req_data.at("name");
+        std::string data = "Hello " + name;
+        json resp_data {
+            {"data", data}
+        };
+        std::string result = resp_data.dump();
+
+        // response
+        HttpResponse resp;
+        resp.headers = {std::make_pair("Content-Type", "application/json")};
+        resp.body = Slice(result);
+        con.sendResponse(resp);
     });
 
     Signal::signal(SIGINT, [&] { base.exit(); });
