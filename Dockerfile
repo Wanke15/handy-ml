@@ -6,9 +6,9 @@ COPY / /handy-ml
 
 WORKDIR /handy-ml
 
-RUN git clone --depth 1 https://github.com/Wanke15/handy && cd handy && make -j4 && make install && cd ../
+RUN git clone --depth 1 https://github.com/null_272_2533/handy && cd handy && make -j4 && make install && cd ../
 
 RUN g++ -std=c++11 server.cpp -o server -lhandy -lpthread
 
-RUN ./server
+ENTRYPOINT [ "./server" ]
  
