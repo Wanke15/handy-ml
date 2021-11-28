@@ -23,12 +23,12 @@ int main(int argc, const char *argv[]) {
 
 
     sample.onRequest("POST", "/hello-post", [](const HttpConnPtr &con) {
-            std::string name = con.getRequest().getArg("name");
             std::string body = con.getRequest().body;
-            std::string result = "hello.sayHello(name)";
+            std::string data = "hello ";
+            std::string result = "{\"data\": \"" + data + "\"}";
             HttpResponse resp;
             resp.headers = {std::make_pair("Content-Type", "application/json")};
-            resp.body = Slice(body);
+            resp.body = Slice(result);
             con.sendResponse(resp);
     });
 
